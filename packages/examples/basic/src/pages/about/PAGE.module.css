@@ -1,0 +1,74 @@
+.wrapper {
+  max-width: 680px;
+}
+
+.heading {
+  font-size: 2rem;
+  margin: 0 0 1rem;
+  letter-spacing: -0.5px;
+}
+
+.lead {
+  font-size: 1.05rem;
+  color: #475569;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+.h2 {
+  font-size: 1.2rem;
+  margin: 2rem 0 0.75rem;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 0.4rem;
+}
+
+.p {
+  color: #475569;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.list {
+  color: #475569;
+  line-height: 2;
+  padding-left: 1.25rem;
+}
+
+.pre {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 1rem 1.25rem;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  overflow-x: auto;
+  margin: 0 0 1.5rem;
+  white-space: pre;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  font-weight: 600;
+}
+
+.td {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #e2e8f0;
+  vertical-align: top;
+  color: #475569;
+}
+
+.tdCode {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #e2e8f0;
+  vertical-align: top;
+}

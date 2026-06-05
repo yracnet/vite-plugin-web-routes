@@ -1,0 +1,63 @@
+.wrapper {
+  padding: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 540px;
+}
+
+.icon {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #c7d2fe;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+  letter-spacing: -2px;
+}
+
+.title {
+  font-size: 1.75rem;
+  margin: 0 0 0.5rem;
+  color: #1e293b;
+}
+
+.path {
+  font-family: monospace;
+  font-size: 0.9rem;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: 0.3rem 0.7rem;
+  color: #475569;
+  margin: 0 0 1.25rem;
+}
+
+.hint {
+  color: #64748b;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin: 0 0 1.25rem;
+}
+
+.pre {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 0.875rem 1rem;
+  font-size: 0.82rem;
+  line-height: 1.7;
+  margin: 0 0 1.75rem;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.btn {
+  display: inline-block;
+  background: #4f46e5;
+  color: white;
+  padding: 0.55rem 1.25rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+}

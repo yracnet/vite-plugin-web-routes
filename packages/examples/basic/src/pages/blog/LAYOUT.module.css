@@ -1,0 +1,71 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: 210px 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.aside {
+  position: sticky;
+  top: 1.5rem;
+}
+
+.asideLabel {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #94a3b8;
+  margin: 0 0 0.5rem;
+}
+
+.asideNav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.asideLink {
+  display: block;
+  padding: 0.4rem 0.7rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: background 0.1s;
+  color: #475569;
+}
+
+.asideLinkActive {
+  background: #ede9fe;
+  color: #4f46e5;
+  font-weight: 600;
+}
+
+.throwArea {
+  margin-top: 1.5rem;
+  border-top: 1px dashed #e2e8f0;
+  padding-top: 1rem;
+}
+
+.throwBtn {
+  width: 100%;
+  background: transparent;
+  border: 1px dashed #fcd34d;
+  color: #b45309;
+  padding: 0.35rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-family: monospace;
+  text-align: center;
+}
+
+.content {
+  min-width: 0;
+}
+
+.loading {
+  color: #94a3b8;
+  font-size: 0.9rem;
+  padding: 1rem 0;
+}

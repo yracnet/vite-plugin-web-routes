@@ -1,0 +1,61 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 2rem;
+}
+
+.badge {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fca5a5;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.icon {
+  font-size: 3rem;
+  color: #dc2626;
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-size: 1.75rem;
+  margin: 0 0 0.75rem;
+  color: #dc2626;
+}
+
+.message {
+  color: #7f1d1d;
+  font-family: monospace;
+  background: #fee2e2;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  max-width: 480px;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.hint {
+  color: #991b1b;
+  font-size: 0.85rem;
+  max-width: 480px;
+  text-align: center;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.btn {
+  display: inline-block;
+  background: #dc2626;
+  color: white;
+  padding: 0.6rem 1.5rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+}
