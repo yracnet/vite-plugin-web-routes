@@ -1,7 +1,33 @@
 {
   "name": "vite-plugin-web-routes",
   "version": "0.1.0",
+  "files": [
+    "dist",
+    "LICENSE"
+  ],
   "license": "MIT",
+  "author": "Willyams Yujra <yracnet@gmail.com>",
+  "description": "Vite plugin that generates React Router v6 routes from your filesystem. Place files named PAGE.tsx, LAYOUT.tsx, BOUNDARY.tsx or ERROR.tsx and get a fully typed routes.ts with zero manual configuration.",
+  "keywords": [
+    "vite",
+    "vite-plugin",
+    "react",
+    "react-router",
+    "react-router-v6",
+    "filesystem-routing",
+    "file-based-routing",
+    "routing",
+    "pages",
+    "layout",
+    "error-boundary",
+    "lazy-loading",
+    "code-splitting",
+    "typescript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yracnet/vite-plugin-web-routes"
+  },
   "type": "module",
   "main": "dist/index.cjs",
   "module": "dist/index.js",
@@ -15,6 +41,8 @@
   },
   "scripts": {
     "build": "tsup",
+    "prepublish": "yarn build",
+    "prepack": "yarn build",
     "dev": "tsup --watch"
   },
   "peerDependencies": {

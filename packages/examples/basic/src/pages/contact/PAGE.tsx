@@ -21,7 +21,7 @@ export default function ContactPage() {
 
   return (
     <div className={s.wrapper}>
-      <h1 className={s.title}>Contact</h1>
+      <h1 className={s.title}>Fake Contact Exmaple</h1>
       <p className={s.sub}>Found a bug or have a question? Reach out.</p>
       <form onSubmit={(e) => { e.preventDefault(); setStatus('sent') }} className={s.form}>
         <label className={s.label}>

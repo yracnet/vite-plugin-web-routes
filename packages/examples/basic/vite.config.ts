@@ -5,6 +5,7 @@ import { webRoutes } from '../../plugin/src'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/vite-plugin-web-routes/',
   plugins: [
     react(),
     webRoutes({
@@ -12,7 +13,6 @@ export default defineConfig({
       dirs: [
         { dir: 'src/pages', route: '' },
       ],
-      exclude: ['node_modules', '.git'],
     }),
   ],
 })
