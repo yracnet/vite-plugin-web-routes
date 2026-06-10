@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-web-routes",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "files": [
     "dist",
     "LICENSE"
@@ -49,6 +49,8 @@
     "vite": ">=4.0.0"
   },
   "dependencies": {
+    "fast-glob": "^3.3.3",
+    "slash-path": "^0.0.2",
     "tsup": "^8.5.1"
   },
   "devDependencies": {

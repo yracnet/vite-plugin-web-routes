@@ -32,7 +32,8 @@ export default defineConfig({
   plugins: [
     react(),
     webRoutes({
-      moduleFile: 'src/routes.ts',
+      moduleId: '@web/routes.jsx',
+      // moduleFile: '/src/routes.jsx',
       dirs: [{ dir: 'src/pages', route: '' }],
     }),
   ],
@@ -42,8 +43,9 @@ export default defineConfig({
       <pre className={s.pre}>{`// src/main.tsx
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import routes from './routes'
+import { createBrowserRouter, RouterProvider } from 'react-router'
+import routes from '@web/routes.jsx'
+// import routes from './routes.jsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

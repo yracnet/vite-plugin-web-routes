@@ -10,26 +10,26 @@ El archivo de rutas se escribe en disco en cada inicio y ante cada cambio — si
 
 ```ts
 // vite.config.ts
-import { webRoutes } from 'vite-plugin-web-routes'
+import { webRoutes } from "vite-plugin-web-routes";
 
 export default defineConfig({
   plugins: [
     webRoutes({
-      moduleFile: 'src/routes.ts',
-      dirs: [{ dir: 'src/pages', route: '' }],
+      moduleId: "~react-pages", // Alias Import default: @web/routes.jsx
+      dirs: [{ dir: "src/pages", route: "" }],
     }),
   ],
-})
+});
 ```
 
 ```tsx
 // main.tsx
-import routes from './routes'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import routes from "./routes";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-createRoot(document.getElementById('root')!).render(
-  <RouterProvider router={createBrowserRouter(routes)} />
-)
+createRoot(document.getElementById("root")!).render(
+  <RouterProvider router={createBrowserRouter(routes)} />,
+);
 ```
 
 ---
@@ -40,9 +40,12 @@ createRoot(document.getElementById('root')!).render(
 webRoutes({
   root?:       string          // cwd por defecto
   moduleFile?: string          // ruta del archivo generado — default ".web/routes.jsx"
+  moduleId?:   string          // alias del archivo — default "@web/routes.jsx"
   routeBase?:  string          // prefijo global de rutas
   dirs:        DirOpt[]        // directorios de páginas (requerido)
   allLazy?:    boolean         // todas las páginas lazy — default false
+  allowWrap?:  boolean         // false, No hablitado
+  allowLayout?:boolean         // true, Hablitado
   exclude?:    string[]        // directorios a ignorar — default ["node_modules", ".git"]
   include?:    string[]        // patrones adicionales de inclusión
   roleMapping?: RoleMapping    // mapa de nombres de archivo → rol (ver más abajo)
@@ -64,16 +67,18 @@ webRoutes({
 
 ## Archivos especiales
 
-| Archivo | Rol | Descripción |
-|---|---|---|
-| `PAGE.tsx` | PAGE | Componente de la página |
-| `PAGE.lazy.tsx` | PAGE (lazy) | Igual, cargado con `React.lazy()` |
-| `LAYOUT.tsx` | LAYOUT | Wrapper con `<Outlet />` — crea anidamiento |
-| `LAYOUT.lazy.tsx` | LAYOUT (lazy) | Igual, cargado con `React.lazy()` |
-| `ERROR.tsx` | ERROR | `errorElement` del route de la página |
-| `ERROR.lazy.tsx` | ERROR (lazy) | Igual, cargado con `React.lazy()` |
-| `BOUNDARY.tsx` | BOUNDARY | `errorElement` del route del layout |
-| `BOUNDARY.lazy.tsx` | BOUNDARY (lazy) | Igual, cargado con `React.lazy()` |
+| Archivo             | Rol          | Lazy  | Descripción                                 |
+| ------------------- | ------------ | ----- | ------------------------------------------- |
+| `PAGE.tsx`          | PAGE         | false | Componente de la página                     |
+| `PAGE.lazy.tsx`     | PAGE         | true  | Igual, cargado con `React.lazy()`           |
+| `ERROR.tsx`         | PAGE_ERROR   | false | `errorElement` del route de la página       |
+| `ERROR.lazy.tsx`    | PAGE_ERROR   | true  | Igual, cargado con `React.lazy()`           |
+| `LAYOUT.tsx`        | LAYOUT       | false | Wrapper con `<Outlet />` — crea anidamiento |
+| `LAYOUT.lazy.tsx`   | LAYOUT       | true  | Igual, cargado con `React.lazy()`           |
+| `BOUNDARY.tsx`      | LAYOUT_ERROR | false | `errorElement` del route del layout         |
+| `BOUNDARY.lazy.tsx` | LAYOUT_ERROR | true  | Igual, cargado con `React.lazy()`           |
+| `ROOT.tsx`          | WRAP         | false | Wrapper con `<Outlet />` — crea anidamiento |
+| `CATCH.tsx`         | WRAP_ERROR   | false | `errorElement` del route del wrapper         |
 
 ### ERROR vs BOUNDARY
 
@@ -97,15 +102,19 @@ Los directorios con `[param]` generan segmentos dinámicos `:param`:
 ```
 src/pages/user/[id]/PAGE.tsx     →  /user/:id
 src/pages/[category]/[slug]/PAGE.tsx  →  /:category/:slug
+src/pages/$category/$slug/PAGE.tsx  →  /:category/:slug
+src/pages/[...]/PAGE.tsx  →  /*
+src/pages/[]/PAGE.tsx  →  /*
+src/pages/$$/PAGE.tsx  →  /*
 ```
 
 ```tsx
 // user/[id]/PAGE.tsx
-import { useParams } from 'react-router-dom'
+import { useParams } from "react-router-dom";
 
 export default function UserPage() {
-  const { id } = useParams<{ id: string }>()
-  return <p>Usuario: {id}</p>
+  const { id } = useParams<{ id: string }>();
+  return <p>Usuario: {id}</p>;
 }
 ```
 
@@ -139,9 +148,9 @@ src/pages/
 
 ```ts
 dirs: [
-  { dir: 'src/pages', route: '' },    // /
-  { dir: 'src/admin', route: 'admin' }, // /admin/*
-]
+  { dir: "src/pages", route: "" }, // /
+  { dir: "src/admin", route: "admin" }, // /admin/*
+];
 ```
 
 Cada directorio es un módulo de rutas aislado. Todos se combinan en el array final.
@@ -173,14 +182,14 @@ Permite extender o redefinir qué nombres de archivo se reconocen como roles:
 
 ```ts
 webRoutes({
-  dirs: [{ dir: 'src/pages', route: '' }],
+  dirs: [{ dir: "src/pages", route: "" }],
   roleMapping: {
     // alias: INDEX.tsx → mismo rol que PAGE
-    'INDEX': { role: 'PAGE', lazy: false },
+    INDEX: { role: "PAGE", lazy: false },
     // alias: CATCH.tsx → mismo rol que BOUNDARY
-    'CATCH':  { role: 'BOUNDARY', lazy: false },
+    CATCH: { role: "BOUNDARY", lazy: false },
   },
-})
+});
 ```
 
 El mapping del usuario se fusiona con el mapping por defecto. Los roles disponibles son: `PAGE`, `LAYOUT`, `ERROR`, `BOUNDARY`.
@@ -193,12 +202,12 @@ El archivo generado es TypeScript/JavaScript estático:
 
 ```ts
 // src/routes.ts — generado automáticamente
-import { lazy, createElement } from "react"
-import type { RouteObject } from "react-router-dom"
+import { lazy, createElement } from "react";
+import type { RouteObject } from "react-router-dom";
 
-import _pages_LAYOUT from "./pages/LAYOUT.tsx"
-import _pages_PAGE from "./pages/PAGE.tsx"
-const _pages_blog_PAGE = lazy(() => import("./pages/blog/PAGE.lazy.tsx"))
+import _pages_LAYOUT from "./pages/LAYOUT.tsx";
+import _pages_PAGE from "./pages/PAGE.tsx";
+const _pages_blog_PAGE = lazy(() => import("./pages/blog/PAGE.lazy.tsx"));
 
 const routes: RouteObject[] = [
   {
@@ -210,9 +219,9 @@ const routes: RouteObject[] = [
       { path: "blog", element: createElement(_pages_blog_PAGE) },
     ],
   },
-]
+];
 
-export default routes
+export default routes;
 ```
 
 ---

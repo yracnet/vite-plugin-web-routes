@@ -46,7 +46,7 @@ export default defineConfig({
 
       <h2 className={s.h2}>Using the generated routes</h2>
       <pre className={s.pre}>{`// src/main.tsx
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router'
 import routes from './routes'
 
 createRoot(document.getElementById('root')!).render(

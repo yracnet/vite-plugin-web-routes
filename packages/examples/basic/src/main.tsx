@@ -1,7 +1,8 @@
 import { StrictMode, Suspense } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createHashRouter, RouterProvider } from 'react-router-dom'
-import routes from './routes'
+//@ts-ignore
+import routes from '@web/routes.jsx'
 
 const router = createHashRouter(routes)
 

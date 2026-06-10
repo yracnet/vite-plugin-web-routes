@@ -9,10 +9,11 @@ export default defineConfig({
   plugins: [
     react(),
     webRoutes({
-      moduleFile: 'src/routes.ts',
       dirs: [
         { dir: 'src/pages', route: '' },
       ],
+      allowLayout: true,
+      allowWrap: false,
     }),
   ],
 })
