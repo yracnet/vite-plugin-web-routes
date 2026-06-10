@@ -1,7 +1,16 @@
 import type { RouteFile, RouteNode } from "./types";
 
-const toSegment = (part: string): string =>
-  part === "[]" ? "*" : part.replace(/^\[(.+)\]$/, ":$1");
+const toSegment = (part: string): string => {
+  return part
+    .replace('[]', '*')
+    .replace('[...]', '*')
+    .replace('$$', '*')
+    //.replace('[..', '*')
+    .replace('$', ':')
+    .replace('[', ':')
+    .replace(']', '');
+}
+
 
 export const buildTree = (files: RouteFile[], rootSegment: string): RouteNode => {
   const root: RouteNode = { segment: rootSegment, children: new Map() };
