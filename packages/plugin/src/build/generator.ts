@@ -1,5 +1,5 @@
-import { WebConfig } from "../types";
-import { RouteElement, RouteEntry } from "./buildTree";
+import type { WebConfig } from "../types";
+import type { RouteElement, RouteEntry } from "./buildTree";
 
 const generateImports = (tree: RouteElement) => {
     const imports: string[] = [];
@@ -90,7 +90,7 @@ const buildReactRouter = (tree: RouteElement) => {
     return JSON.stringify(routes, null, 2);
 };
 
-export const generateCode = (routeElement: RouteElement, config: WebConfig): string => {
+export const generateCode = (routeElement: RouteElement, _: WebConfig): string => {
     const imports = generateImports(routeElement);
     const code = buildReactRouter(routeElement)
         .replace(/"CREATE_ELEMENT:(.*)"/g, 'createElement($1)')

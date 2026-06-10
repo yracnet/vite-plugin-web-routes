@@ -1,7 +1,7 @@
 
 import path from "slash-path";
-import { WebConfig } from "../types";
-import { RouteDir } from "./scanDirectory";
+import type { WebConfig } from "../types";
+import type { RouteDir } from "./scanDirectory";
 
 export type RouteEntry = false | {
     varName: string,

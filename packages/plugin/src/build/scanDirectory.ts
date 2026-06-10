@@ -1,4 +1,4 @@
-import { WebConfig } from "../types";
+import type { WebConfig } from "../types";
 import fg from "fast-glob";
 
 export type RouteDir = {
