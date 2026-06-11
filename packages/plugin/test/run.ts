@@ -4,7 +4,9 @@ import { buildTree } from "../src/build/buildTree";
 import { assertConfig } from "../src/types";
 
 const run1 = () => {
-    const config = assertConfig({        
+    const config = assertConfig({
+        allowWrap: true,
+        allowLayout: false,
         dirs: [
             {
                 route: "",

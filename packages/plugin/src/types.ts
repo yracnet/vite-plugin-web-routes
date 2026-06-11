@@ -1,8 +1,9 @@
 import path from "slash-path";
 
-export type FileRole = "WRAP" | "WRAP_ERROR" // WRAP
-  | "LAYOUT" | "LAYOUT_ERROR"  // LAYOUT
-  | "INDEX" | "PAGE" | "PAGE_ERROR" // PAGE;
+export type FileRole =
+  | "WRAP"   | "WRAP_ERROR"
+  | "LAYOUT" | "LAYOUT_ERROR"
+  | "INDEX"  | "PAGE" | "PAGE_ERROR"
 
 export interface RoleMeta {
   role: FileRole;
@@ -79,8 +80,6 @@ export interface WebConfig {
   moduleId: string;
   routeBase: string;
   dirs: DirConfig[];
-  allowWrap: boolean;
-  allowLayout: boolean;
   include: string[];
   exclude: string[];
   roleMapping: RoleMapping;
@@ -109,12 +108,19 @@ export const assertConfig = (opts: WebOpts): WebConfig => {
     include: includeOverride = [],
     roleMapping: roleMappingOverride = {},
   } = opts;
-  const currentMode = process.env.NODE_ENV ?? "dev";
+  const currentMode = process.env.NODE_ENV ?? "production";
   const roleMapping = Object.entries({ ...DEFAULT_ROLE_MAPPING, ...roleMappingOverride })
-    .reduce<RoleMapping>((acc, [key, value]) => {
-      if (value) {
-        acc[key] = value;
+    .map(([name, value]) => {
+      if (value === false) {
+        return null;
       }
+      return { name, value }
+    })
+    .filter(it => it != null)
+    .filter((it) => allowWrap || (it.value.role !== "WRAP" && it.value.role !== "WRAP_ERROR"))
+    .filter((it) => allowLayout || (it.value.role !== "LAYOUT" && it.value.role !== "LAYOUT_ERROR"))
+    .reduce<RoleMapping>((acc, it) => {
+      acc[it.name] = it.value;
       return acc;
     }, {});
   const watchPattern = buildWatchPattern(roleMapping);
@@ -137,13 +143,11 @@ export const assertConfig = (opts: WebOpts): WebConfig => {
       })
       .map((it) => {
         return {
-          dir: it.dir,
+          dir: path.resolve(root, it.dir),
           route: it.route,
           lazy: allLazy || !!it.lazy,
         }
       }),
-    allowWrap,
-    allowLayout,
     exclude,
     include: [...includeRole, ...includeOverride],
     roleMapping,

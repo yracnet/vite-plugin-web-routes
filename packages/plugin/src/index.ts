@@ -1,4 +1,4 @@
-import { resolve, dirname } from "path";
+import path from "slash-path";
 import { mkdirSync, writeFileSync } from "fs";
 import { assertConfig, type WebConfig, type WebOpts } from "./types";
 
@@ -9,7 +9,7 @@ import { generateCode } from "./build/generator";
 export const webRoutes = (opts: WebOpts) => {
   const config: WebConfig = assertConfig(opts);
   const { root, moduleId, moduleFile, dirs, watchPattern, moduleDir } = config;
-  mkdirSync(dirname(moduleFile), { recursive: true });
+  mkdirSync(path.dirname(moduleFile), { recursive: true });
 
   function generate(): void {
     const files = scanDirectory(config);
@@ -36,8 +36,7 @@ export const webRoutes = (opts: WebOpts) => {
     configureServer: (server: {
       watcher: { on(event: string, cb: (event: string, path: string) => void): void };
     }) => {
-      const watchedDirs = dirs
-        .map((d) => resolve(root, d.dir).replace(/\\/g, "/"));
+      const watchedDirs = dirs.map((d) => path.resolve(root, d.dir));
       server.watcher.on("all", (_event: string, filePath: string) => {
         const normalised = filePath.replace(/\\/g, "/");
         const isUnderWatched = watchedDirs.some((dir) => normalised.startsWith(dir));

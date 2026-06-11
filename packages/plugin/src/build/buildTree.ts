@@ -29,8 +29,9 @@ const createNode = (): RouteElement => {
         children: {},
     };
 }
-export const buildTree = (routeDirs: RouteDir[], { moduleDir, roleMapping, allowLayout, allowWrap }: WebConfig) => {
+export const buildTree = (routeDirs: RouteDir[], { moduleDir, roleMapping }: WebConfig) => {
     const node = createNode();
+    let count = 0;
     for (const { route, dir, lazy, files } of routeDirs) {
         for (const file of files) {
             const nameFile = path.basename(file).replace(/\.[^.]+$/, '');
@@ -38,19 +39,11 @@ export const buildTree = (routeDirs: RouteDir[], { moduleDir, roleMapping, allow
             if (!meta) {
                 continue;
             }
-            if(!allowWrap && (meta.role === "WRAP" || meta.role === "WRAP_ERROR")){
-                continue;
-            }
-            if(!allowLayout && (meta.role === "LAYOUT" || meta.role === "LAYOUT_ERROR")){
-                continue;
-            }
-            const dirname = path.dirname(file);
-            const varName = path.join(dir, dirname, nameFile)
-                .replace(/\[|\]|\.\.\.|\$|\s|\:/g, '')
-                .replace(/\/|\\|\./g, '_');
+
             const sourceFile = path.join(dir, file);
             const importFile = path.relative(moduleDir, sourceFile);
-            const parts = path.join(route, dirname)
+            const segment = path.dirname(file);
+            const parts = path.join(route, segment)
                 .split("/")
                 .filter(Boolean)
                 .filter(it => it !== ".");
@@ -60,6 +53,10 @@ export const buildTree = (routeDirs: RouteDir[], { moduleDir, roleMapping, allow
                 current.children[part] ??= createNode();
                 current = current.children[part];
             }
+
+            const varName = path.join(route, segment, nameFile, `${++count}`)
+                .replace(/[^a-zA-Z0-9]/g, "_")
+                .replace(/_+/g, "_");
             //@ts-ignore
             current[meta.role] = {
                 lazy: lazy || meta.lazy,
